@@ -1,0 +1,30 @@
+services:
+  codex:
+    build:
+      context: .
+    stdin_open: true
+    tty: true
+    working_dir: /home/agent/projects
+    volumes:
+      # Workspace
+      - ${HOST_HOME}/code/workspace:/home/agent/workspace
+      # Projects
+      - ${HOST_HOME}/code/github/tesla-fetch:/home/agent/projects/tesla-fetch
+      - ${HOST_HOME}/code/github/dotfiles:/home/agent/projects/dotfiles
+      - ${HOST_HOME}/code/github/claude-jail:/home/agent/projects/claude-jail
+      - ${HOST_HOME}/code/github/codex-jail:/home/agent/projects/codex-jail
+      - ${HOST_HOME}/code/github/Bonsai:/home/agent/projects/Bonsai
+      - ${HOST_HOME}/.config/nvim:/home/agent/projects/nvim-config
+      # Persist Codex config/auth
+      - codex-data:/root/.codex
+      # Persist GitHub CLI config/auth
+      - gh-data:/root/.config/gh
+    environment:
+      TERM: xterm-256color
+      GH_TOKEN: ${GITHUB_TOKEN}
+    ports:
+      - "1455:1455"
+
+volumes:
+  codex-data:
+  gh-data:
