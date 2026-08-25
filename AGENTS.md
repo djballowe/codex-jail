@@ -4,7 +4,7 @@
 
 This repository defines a small Debian-based container for running the Codex CLI in an isolated development environment. Keep changes focused on the container image, its startup behavior, and the Compose configuration used to expose selected host projects.
 
-## Repository Layout test
+## Repository Layout
 
 - `README.md`: short project overview.
 - `docker/Dockerfile`: installs the command-line tools and Codex CLI used in the container.
