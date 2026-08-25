@@ -7,21 +7,26 @@ RUN apt-get update \
         curl \
         git \
         gh \
+        gnupg \
         openssh-client \
         ripgrep \
-        wget \
-        gnupg \
         vim \
+        wget \
         zsh \
     && rm -rf /var/lib/apt/lists/*
 
+RUN git config --system --add safe.directory '*' \
+    && git config --system url."https://github.com/".insteadOf "git@github.com:"
+
 RUN curl -fsSL https://chatgpt.com/codex/install.sh | sh
-RUN git config --system --add safe.directory '*'
+
 ENV PATH="/root/.local/bin:${PATH}"
 
 WORKDIR /workspace
+
 COPY on-start.sh /usr/local/bin/on-start.sh
 RUN chmod +x /usr/local/bin/on-start.sh
 
 ENTRYPOINT ["/usr/local/bin/on-start.sh"]
+
 CMD ["bash"]
