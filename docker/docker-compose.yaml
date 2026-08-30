@@ -2,6 +2,10 @@ services:
   codex:
     build:
       context: .
+      args:
+        USER_UID: ${HOST_UID:-1000}
+        USER_GID: ${HOST_GID:-1000}
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
     stdin_open: true
     tty: true
     working_dir: /home/agent/projects
@@ -16,14 +20,12 @@ services:
       - ${HOST_HOME}/code/github/Bonsai:/home/agent/projects/Bonsai
       - ${HOST_HOME}/.config/nvim:/home/agent/projects/nvim-config
       # Persist Codex config/auth
-      - codex-data:/root/.codex
+      - codex-data:/home/agent/.codex
       # Persist GitHub CLI config/auth
-      - gh-data:/root/.config/gh
+      - gh-data:/home/agent/.config/gh
     environment:
       TERM: xterm-256color
       GH_TOKEN: ${GITHUB_TOKEN}
-    ports:
-      - "1455:1455"
 
 volumes:
   codex-data:
