@@ -31,6 +31,7 @@ RUN apt-get update \
         wget \
         gnupg \
         vim \
+        wget \
         zsh \
     && install -m 0755 -d /etc/apt/keyrings \
     && curl -fsSL https://download.docker.com/linux/debian/gpg \
@@ -89,4 +90,5 @@ RUN curl -fsSL https://chatgpt.com/codex/install.sh | sh
 WORKDIR /home/${USERNAME}/projects
 
 ENTRYPOINT ["/usr/local/bin/on-start.sh"]
+
 CMD ["bash"]
